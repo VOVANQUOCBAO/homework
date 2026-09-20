@@ -6,7 +6,7 @@
 
 **Architecture:** A single Android application module contains two activities and resource-qualified layouts. Python structural tests parse source/XML without an emulator; Gradle then performs Android resource linking, Java compilation, lint, and unit tests when an Android SDK is available.
 
-**Tech Stack:** Java 17, Android Gradle Plugin 8.7.3, Gradle 8.9, compileSdk 35, minSdk 24, AndroidX AppCompat 1.7.0, ConstraintLayout 2.2.0, Material Components 1.12.0, Python 3 standard library XML parser.
+**Tech Stack:** Java 17, Android Gradle Plugin 8.7.3, Gradle 8.9, compileSdk 35, minSdk 24, AndroidX AppCompat 1.7.0, ConstraintLayout 2.2.0, Material Components 1.12.0, Python 3, pytest, and the standard-library XML parser.
 
 **Spec:** `docs/superpowers/specs/2026-09-20-lab-a3-design.md`
 
@@ -103,7 +103,7 @@ def test_reusable_text_styles_exist():
 
 - [ ] **Step 2: Run tests and verify the expected failure**
 
-Run: `python3 -m unittest discover -s tests -v`
+Run: `python3 -m pytest tests -v`
 
 Expected: ERROR/FAIL because `app/build.gradle.kts` and resource files do not exist.
 
@@ -113,7 +113,7 @@ Create the Gradle files with the versions in the plan header. Configure `compile
 
 - [ ] **Step 4: Run foundation tests**
 
-Run: `python3 -m unittest discover -s tests -v`
+Run: `python3 -m pytest tests -v`
 
 Expected: all four tests PASS.
 
@@ -171,7 +171,7 @@ def test_visible_text_uses_string_resources():
 
 - [ ] **Step 2: Run portrait tests and verify failure**
 
-Run: `python3 -m unittest tests.test_project_structure -v`
+Run: `python3 -m pytest tests/test_project_structure.py -v`
 
 Expected: ERROR because the portrait and profile XML files do not exist.
 
@@ -181,7 +181,7 @@ Create the profile as a `MaterialCardView` containing name, MSSV, email, divider
 
 - [ ] **Step 4: Run portrait tests**
 
-Run: `python3 -m unittest tests.test_project_structure -v`
+Run: `python3 -m pytest tests/test_project_structure.py -v`
 
 Expected: all seven accumulated tests PASS.
 
@@ -257,7 +257,7 @@ def test_java_wires_snackbar_and_constraint_navigation():
 
 - [ ] **Step 2: Run variant tests and verify failure**
 
-Run: `python3 -m unittest tests.test_project_structure -v`
+Run: `python3 -m pytest tests/test_project_structure.py -v`
 
 Expected: ERROR because landscape, ConstraintLayout, and Java files do not exist.
 
@@ -267,7 +267,7 @@ Implement `MainActivity.onCreate(Bundle)` with EdgeToEdge, insets for `R.id.main
 
 - [ ] **Step 4: Run complete structural test suite**
 
-Run: `python3 -m unittest discover -s tests -v`
+Run: `python3 -m pytest tests -v`
 
 Expected: all eleven tests PASS with no warnings or errors.
 
@@ -314,7 +314,7 @@ def test_submission_docs_cover_required_sections():
 
 - [ ] **Step 2: Run documentation test and verify failure**
 
-Run: `python3 -m unittest tests.test_project_structure.ProjectStructureTests.test_submission_docs_cover_required_sections -v` if tests are class-based; otherwise run `python3 -m unittest discover -s tests -v`.
+Run: `python3 -m pytest tests/test_project_structure.py::test_submission_docs_cover_required_sections -v`.
 
 Expected: ERROR because README and report do not exist.
 
@@ -327,7 +327,7 @@ Create README with project identity, prerequisites, Android Studio run instructi
 Run:
 
 ```bash
-python3 -m unittest discover -s tests -v
+python3 -m pytest tests -v
 ./gradlew clean test lintDebug assembleDebug
 git status --short
 git log --oneline --decorate -5
@@ -347,7 +347,7 @@ git commit -m "docs: add Lab A3 report and demo checklist"
 Run:
 
 ```bash
-python3 -m unittest discover -s tests -v
+python3 -m pytest tests -v
 ./gradlew test lintDebug assembleDebug
 git status --short
 git log --oneline --decorate -7
